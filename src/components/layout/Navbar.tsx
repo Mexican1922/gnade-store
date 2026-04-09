@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Search, Heart, ShoppingBag, Menu, X } from "lucide-react";
 import { useCart } from "../../context/CartContext";
-import { useAuth } from "../../context/AuthContext";
-import { User } from "lucide-react";
 
 const navLinks = [
   { label: "Home", path: "/" },
@@ -17,7 +15,6 @@ const navLinks = [
 
 const Navbar = () => {
   const { totalItems } = useCart();
-  const { isAuthenticated, user, logout } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -44,6 +41,7 @@ const Navbar = () => {
               Essential Skincare & Spa
             </span>
           </Link>
+
           {/* Desktop Nav */}
           <ul className="hidden md:flex items-center gap-8 list-none">
             {navLinks.map((link) => (
@@ -58,39 +56,6 @@ const Navbar = () => {
             ))}
           </ul>
 
-          {isAuthenticated ? (
-            <div className="relative group">
-              <button className="w-8 h-8 flex items-center justify-center rounded-full border border-black/10 hover:bg-gnade-pale hover:border-gnade-dark/20 transition-all duration-200">
-                <User size={14} strokeWidth={1.5} />
-              </button>
-              {/* Dropdown */}
-              <div className="absolute right-0 top-10 w-44 bg-white border border-gnade-pale shadow-sm opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                <p className="px-4 py-3 text-[11px] text-gnade-dark/50 border-b border-gnade-pale truncate">
-                  {user?.first_name} {user?.last_name}
-                </p>
-                <Link
-                  to="/account"
-                  className="block px-4 py-2.5 text-[11px] text-gnade-black hover:bg-gnade-pale transition-colors"
-                >
-                  My Account
-                </Link>
-                <button
-                  onClick={logout}
-                  className="w-full text-left px-4 py-2.5 text-[11px] text-red-400 hover:bg-gnade-pale transition-colors"
-                >
-                  Sign Out
-                </button>
-              </div>
-            </div>
-          ) : (
-            <Link
-              to="/login"
-              className="w-8 h-8 flex items-center justify-center rounded-full border border-black/10 hover:bg-gnade-pale hover:border-gnade-dark/20 transition-all duration-200"
-              aria-label="Account"
-            >
-              <User size={14} strokeWidth={1.5} />
-            </Link>
-          )}
           {/* Actions */}
           <div className="flex items-center gap-3">
             <button
