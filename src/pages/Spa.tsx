@@ -112,8 +112,7 @@ const Spa = () => {
             Spa & Wellness
           </span>
           <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl font-semibold text-white leading-[1.1] animate-fade-up stagger-2">
-            The GNADE <em className="italic text-gnade-pink">Spa</em>{" "}
-            Experience
+            The GNADE <em className="italic text-gnade-pink">Spa</em> Experience
           </h1>
           <p className="text-[14px] text-white/65 mt-4 max-w-lg leading-relaxed font-light animate-fade-up stagger-3">
             Professional skincare treatments and expert consultations. Your skin
@@ -121,7 +120,7 @@ const Spa = () => {
           </p>
           <div className="flex gap-3 mt-8 animate-fade-up stagger-4">
             <a
-              href="https://wa.me/2348123456789?text=Hi%2C%20I'd%20like%20to%20book%20a%20spa%20appointment"
+              href="https://wa.me/2349015599954?text=Hi%2C%20I'd%20like%20to%20book%20a%20spa%20appointment"
               target="_blank"
               rel="noreferrer"
               className="bg-white text-gnade-dark px-7 py-3 text-[11px] tracking-[1.5px] uppercase font-medium rounded-sm hover:bg-white/90 transition-colors duration-200 inline-flex items-center gap-2"
@@ -247,7 +246,7 @@ const Spa = () => {
                 skin the expert attention it deserves.
               </p>
               <a
-                href="https://wa.me/2348123456789?text=Hi%2C%20I'd%20like%20to%20book%20a%20spa%20appointment"
+                href="https://wa.me/2349015599954?text=Hi%2C%20I'd%20like%20to%20book%20a%20spa%20appointment"
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center gap-2 text-[11px] tracking-[1.5px] uppercase text-white/50 border-b border-white/20 pb-0.5 hover:text-white/80 hover:border-white/40 transition-all duration-200"
@@ -328,8 +327,7 @@ const Spa = () => {
             Ready to Glow?
           </span>
           <h2 className="font-serif text-4xl md:text-5xl font-semibold text-white leading-[1.15] mb-6">
-            Book Your{" "}
-            <em className="italic text-gnade-pink">Spa Session</em>
+            Book Your <em className="italic text-gnade-pink">Spa Session</em>
           </h2>
           <p className="text-[14px] text-white/55 leading-relaxed font-light mb-10 max-w-md mx-auto">
             Transform your skin with a professional treatment tailored to your
@@ -337,7 +335,7 @@ const Spa = () => {
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4">
             <a
-              href="https://wa.me/2348123456789?text=Hi%2C%20I'd%20like%20to%20book%20a%20spa%20appointment"
+              href="https://wa.me/2349015599954?text=Hi%2C%20I'd%20like%20to%20book%20a%20spa%20appointment"
               target="_blank"
               rel="noreferrer"
               className="bg-white text-gnade-dark px-8 py-3.5 text-[11px] tracking-[1.5px] uppercase font-medium rounded-sm hover:bg-white/90 transition-colors duration-200 inline-flex items-center gap-2 hover:shadow-md"
