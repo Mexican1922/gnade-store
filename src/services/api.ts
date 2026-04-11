@@ -81,6 +81,32 @@ export const ordersAPI = {
   getById: (id: number) => request<Order>(`/orders/${id}/`),
 };
 
+// --- Contact ---
+export interface ContactPayload {
+  name: string;
+  email: string;
+  phone: string;
+  subject: string;
+  message: string;
+}
+
+export const contactAPI = {
+  send: (payload: ContactPayload) =>
+    request<{ success: boolean; message: string }>("/contact/", {
+      method: "POST",
+      body: JSON.stringify(payload),
+    }),
+};
+
+// --- Newsletter ---
+export const newsletterAPI = {
+  subscribe: (email: string) =>
+    request<{ success: boolean; message: string }>("/newsletter/subscribe/", {
+      method: "POST",
+      body: JSON.stringify({ email }),
+    }),
+};
+
 // --- Types ---
 export interface User {
   id: number;

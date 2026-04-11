@@ -6,6 +6,13 @@ import ProductDetail from "./pages/ProductDetail";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import OrderSuccess from "./pages/OrderSuccess";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import Spa from "./pages/Spa";
+import Delivery from "./pages/Delivery";
+import Returns from "./pages/Returns";
+import Privacy from "./pages/Privacy";
+import FAQ from "./pages/FAQ";
 import NotFound from "./pages/NotFound";
 
 function App() {
@@ -18,6 +25,13 @@ function App() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/order-success" element={<OrderSuccess />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/spa" element={<Spa />} />
+        <Route path="/delivery" element={<Delivery />} />
+        <Route path="/returns" element={<Returns />} />
+        <Route path="/privacy" element={<Privacy />} />
+        <Route path="/faq" element={<FAQ />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>
@@ -25,3 +39,4 @@ function App() {
 }
 
 export default App;
+

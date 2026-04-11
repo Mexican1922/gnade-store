@@ -1,15 +1,31 @@
 import { useState } from "react";
 import { ArrowRight } from "lucide-react";
+import { newsletterAPI } from "../../services/api";
+import { useToast } from "../../context/ToastContext";
 
 const NewsletterSection = () => {
+  const { showToast } = useToast();
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
-    setSubmitted(true);
-    setEmail("");
+
+    setLoading(true);
+    try {
+      await newsletterAPI.subscribe(email);
+      setSubmitted(true);
+      setEmail("");
+      showToast("You're subscribed!", "success");
+    } catch (err) {
+      const message =
+        err instanceof Error ? err.message : "Failed to subscribe";
+      showToast(message, "error");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -45,14 +61,16 @@ const NewsletterSection = () => {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email address"
               required
-              className="flex-1 px-5 py-3.5 text-[13px] font-light text-gnade-black placeholder:text-gnade-black/30 bg-white outline-none"
+              disabled={loading}
+              className="flex-1 px-5 py-3.5 text-[13px] font-light text-gnade-black placeholder:text-gnade-black/30 bg-white outline-none disabled:opacity-60"
             />
             <button
               type="submit"
-              className="bg-gnade-dark text-white px-6 py-3.5 text-[11px] tracking-[1.5px] uppercase font-medium flex items-center justify-center gap-2 hover:bg-gnade-mid transition-colors duration-200 whitespace-nowrap"
+              disabled={loading}
+              className="bg-gnade-dark text-white px-6 py-3.5 text-[11px] tracking-[1.5px] uppercase font-medium flex items-center justify-center gap-2 hover:bg-gnade-mid transition-colors duration-200 whitespace-nowrap disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              Subscribe
-              <ArrowRight size={12} strokeWidth={1.5} />
+              {loading ? "Subscribing..." : "Subscribe"}
+              {!loading && <ArrowRight size={12} strokeWidth={1.5} />}
             </button>
           </form>
         )}
@@ -66,3 +84,4 @@ const NewsletterSection = () => {
 };
 
 export default NewsletterSection;
+
