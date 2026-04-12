@@ -125,6 +125,8 @@ export interface Product {
   name: string;
   slug: string;
   price: string;
+  original_price: string | null;
+  stock_count: number | null;
   description: string;
   usage: string;
   ingredients: string;

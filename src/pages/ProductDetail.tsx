@@ -4,30 +4,9 @@ import { ShoppingBag, Heart, ArrowLeft, Plus, Minus } from "lucide-react";
 import { useCart } from "../context/CartContext";
 import { useToast } from "../context/ToastContext";
 import { productsAPI } from "../services/api";
-import type { Product as APIProduct } from "../services/api";
 import { Product } from "../types";
+import { toProduct } from "../utils/adapters";
 
-// --- Adapter ---
-function toProduct(p: APIProduct): Product {
-  return {
-    id: p.id,
-    name: p.name,
-    slug: p.slug,
-    price: parseFloat(p.price),
-    image: p.image || "/placeholder.jpg",
-    hoverImage: p.hover_image || undefined,
-    category: p.category?.name || "",
-    badge: p.is_best_seller ? "Best Seller" : p.is_new ? "New" : undefined,
-    inStock: p.in_stock,
-    description: p.description,
-    usage: p.usage,
-    // Django stores ingredients as comma-separated string
-    ingredients: p.ingredients
-      ? p.ingredients.split(",").map((s) => s.trim())
-      : [],
-    images: p.image ? [p.image] : [],
-  };
-}
 
 const ProductDetail = () => {
   const { addItem } = useCart();
@@ -204,6 +183,16 @@ const ProductDetail = () => {
               <span className="text-2xl font-medium text-gnade-dark">
                 ₦{product.price.toLocaleString()}
               </span>
+              {product.originalPrice && product.originalPrice > product.price && (
+                <span className="text-[15px] text-black/30 line-through">
+                  ₦{product.originalPrice.toLocaleString()}
+                </span>
+              )}
+              {product.originalPrice && product.originalPrice > product.price && (
+                <span className="text-[11px] tracking-[0.5px] font-medium text-green-600 bg-green-50 px-2 py-0.5 rounded-sm">
+                  {Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}% OFF
+                </span>
+              )}
             </div>
 
             {product.inStock ? (

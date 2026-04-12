@@ -3,18 +3,10 @@ import { useSearchParams } from "react-router-dom";
 import { SlidersHorizontal, X } from "lucide-react";
 import ProductCard from "../components/ui/ProductCard";
 import { productsAPI } from "../services/api";
-import type { Product as APIProduct } from "../services/api";
 import { Product } from "../types";
+import { toProduct, FALLBACK_CATEGORIES } from "../utils/adapters";
 
-const categories = [
-  "All",
-  "Lipcare",
-  "Face Care",
-  "Body Care",
-  "Natural Oils",
-  "Soaps",
-  "Spa",
-];
+const API_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000/api";
 
 const sortOptions = [
   { label: "Latest", value: "latest" },
@@ -23,52 +15,39 @@ const sortOptions = [
   { label: "Best Sellers", value: "best" },
 ];
 
-// --- Adapter: shape API product into your existing Product type ---
-function toProduct(p: APIProduct): Product {
-  return {
-    id: p.id,
-    name: p.name,
-    slug: p.slug,
-    price: parseFloat(p.price),
-    image: p.image || "/placeholder.jpg",
-    hoverImage: p.hover_image || undefined,
-    category: p.category?.name || "",
-    badge: p.is_best_seller ? "Best Seller" : p.is_new ? "New" : undefined,
-    inStock: p.in_stock,
-    description: p.description,
-    usage: p.usage,
-    ingredients: p.ingredients
-      ? p.ingredients.split(",").map((s) => s.trim())
-      : [],
-    images: p.image ? [p.image] : [],
-  };
-}
 
 const Shop = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [sort, setSort] = useState("latest");
   const [products, setProducts] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<string[]>(FALLBACK_CATEGORIES);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   const activeCategory = searchParams.get("category") || "all";
 
-  // --- Fetch products from Django ---
+  // --- Fetch products + categories from Django ---
   useEffect(() => {
-    const fetch = async () => {
+    const fetchData = async () => {
       try {
         setLoading(true);
         setError(null);
-        const data = await productsAPI.getAll();
-        setProducts(data.map(toProduct));
+        const [productData, catRes] = await Promise.all([
+          productsAPI.getAll(),
+          fetch(`${API_URL}/products/categories/`).then((r) => r.json()),
+        ]);
+        setProducts(productData.map(toProduct));
+        if (Array.isArray(catRes) && catRes.length > 0) {
+          setCategories(["All", ...catRes.map((c: { name: string }) => c.name)]);
+        }
       } catch (err) {
         setError("Failed to load products. Please try again.");
       } finally {
         setLoading(false);
       }
     };
-    fetch();
+    fetchData();
   }, []);
 
   const setCategory = (cat: string) => {

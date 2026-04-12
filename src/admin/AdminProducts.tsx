@@ -26,6 +26,8 @@ interface Product {
   name: string;
   slug: string;
   price: string;
+  original_price: string | null;
+  stock_count: number | null;
   description: string;
   usage: string;
   ingredients: string;
@@ -41,6 +43,8 @@ interface Product {
 const EMPTY_FORM = {
   name: "",
   price: "",
+  original_price: "",
+  stock_count: "",
   description: "",
   usage: "",
   ingredients: "",
@@ -146,6 +150,8 @@ export default function AdminProducts() {
     setForm({
       name: p.name,
       price: p.price,
+      original_price: p.original_price || "",
+      stock_count: p.stock_count != null ? String(p.stock_count) : "",
       description: p.description,
       usage: p.usage,
       ingredients: p.ingredients,
@@ -177,6 +183,8 @@ export default function AdminProducts() {
       name: form.name,
       slug,
       price: parseFloat(form.price),
+      original_price: form.original_price ? parseFloat(form.original_price) : null,
+      stock_count: form.stock_count ? parseInt(form.stock_count) : null,
       description: form.description,
       usage: form.usage,
       ingredients: form.ingredients,
@@ -392,15 +400,28 @@ export default function AdminProducts() {
                     </td>
                     {/* Price */}
                     <td className="px-4 py-3">
-                      <span
-                        style={{
-                          fontSize: 13,
-                          fontWeight: 500,
-                          color: "#0F1A10",
-                        }}
-                      >
-                        ₦{parseFloat(p.price).toLocaleString()}
-                      </span>
+                      <div className="flex flex-col">
+                        <span
+                          style={{
+                            fontSize: 13,
+                            fontWeight: 500,
+                            color: "#0F1A10",
+                          }}
+                        >
+                          ₦{parseFloat(p.price).toLocaleString()}
+                        </span>
+                        {p.original_price && parseFloat(p.original_price) > parseFloat(p.price) && (
+                          <span
+                            style={{
+                              fontSize: 10,
+                              color: "#aaa",
+                              textDecoration: "line-through",
+                            }}
+                          >
+                            ₦{parseFloat(p.original_price).toLocaleString()}
+                          </span>
+                        )}
+                      </div>
                     </td>
                     {/* Status */}
                     <td className="px-4 py-3">
@@ -539,6 +560,24 @@ export default function AdminProducts() {
                 />
               </div>
 
+              {/* Original Price + Stock Count */}
+              <div className="grid grid-cols-2 gap-4">
+                <Field
+                  label="Original Price (₦)"
+                  value={form.original_price}
+                  type="number"
+                  onChange={(v) => setForm((p) => ({ ...p, original_price: v }))}
+                  placeholder="Former price (if on sale)"
+                />
+                <Field
+                  label="Stock Count"
+                  value={form.stock_count}
+                  type="number"
+                  onChange={(v) => setForm((p) => ({ ...p, stock_count: v }))}
+                  placeholder="Leave empty for unlimited"
+                />
+              </div>
+
               {/* Category */}
               <div className="flex flex-col gap-1.5">
                 <label
@@ -673,11 +712,13 @@ function Field({
   value,
   onChange,
   type = "text",
+  placeholder,
 }: {
   label: string;
   value: string;
   onChange: (v: string) => void;
   type?: string;
+  placeholder?: string;
 }) {
   return (
     <div className="flex flex-col gap-1.5">
@@ -695,6 +736,7 @@ function Field({
         type={type}
         value={value}
         onChange={(e) => onChange(e.target.value)}
+        placeholder={placeholder}
         className="border px-3 py-2.5 rounded-sm outline-none transition-colors duration-200"
         style={{ fontSize: 13, borderColor: "#E8E8E8" }}
       />

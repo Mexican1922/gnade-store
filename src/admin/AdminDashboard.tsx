@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Package, ShoppingBag, TrendingUp, AlertCircle } from "lucide-react";
+import { Package, ShoppingBag, TrendingUp, AlertCircle, Star, Sparkles } from "lucide-react";
 import AdminLayout from "./AdminLayout";
 import { Link } from "react-router-dom";
 
@@ -18,6 +18,8 @@ export default function AdminDashboard() {
     orders: 0,
     revenue: 0,
     outOfStock: 0,
+    newArrivals: 0,
+    bestSellers: 0,
   });
   const [loading, setLoading] = useState(true);
 
@@ -40,11 +42,19 @@ export default function AdminDashboard() {
         const outOfStock = Array.isArray(products)
           ? products.filter((p: { in_stock: boolean }) => !p.in_stock).length
           : 0;
+        const newArrivals = Array.isArray(products)
+          ? products.filter((p: { is_new: boolean }) => p.is_new).length
+          : 0;
+        const bestSellers = Array.isArray(products)
+          ? products.filter((p: { is_best_seller: boolean }) => p.is_best_seller).length
+          : 0;
         setStats({
           products: Array.isArray(products) ? products.length : 0,
           orders: Array.isArray(orders) ? orders.length : 0,
           revenue,
           outOfStock,
+          newArrivals,
+          bestSellers,
         });
       } catch {
         /* silent */
@@ -88,11 +98,27 @@ export default function AdminDashboard() {
       bg: "#FEF2F2",
       link: "/admin/products",
     },
+    {
+      label: "New Arrivals",
+      value: stats.newArrivals,
+      icon: Sparkles,
+      color: "#3b82f6",
+      bg: "#EFF6FF",
+      link: "/admin/products",
+    },
+    {
+      label: "Best Sellers",
+      value: stats.bestSellers,
+      icon: Star,
+      color: "#f59e0b",
+      bg: "#FEF3C7",
+      link: "/admin/products",
+    },
   ];
 
   return (
     <AdminLayout>
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         <div className="mb-8">
           <h1
             style={{
@@ -110,7 +136,7 @@ export default function AdminDashboard() {
         </div>
 
         {/* Stat cards */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
           {cards.map((card) => {
             const Icon = card.icon;
             return (
