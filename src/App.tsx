@@ -14,6 +14,7 @@ import Returns from "./pages/Returns";
 import Privacy from "./pages/Privacy";
 import FAQ from "./pages/FAQ";
 import NotFound from "./pages/NotFound";
+import AdminApp from "./admin/AdminApp";
 
 function App() {
   return (
@@ -33,10 +34,10 @@ function App() {
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/faq" element={<FAQ />} />
       </Route>
+      <Route path="/admin/*" element={<AdminApp />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }
 
 export default App;
-
