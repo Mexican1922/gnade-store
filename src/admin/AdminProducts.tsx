@@ -167,8 +167,15 @@ export default function AdminProducts() {
     }
     setSaving(true);
     setError("");
+    const slug = form.name
+      .toLowerCase()
+      .trim()
+      .replace(/\s+/g, "-")
+      .replace(/[^a-z0-9-]/g, "");
+
     const payload = {
       name: form.name,
+      slug,
       price: parseFloat(form.price),
       description: form.description,
       usage: form.usage,
@@ -178,7 +185,7 @@ export default function AdminProducts() {
       is_new: form.is_new,
       is_best_seller: form.is_best_seller,
       in_stock: form.in_stock,
-      category: parseInt(form.category_id),
+      category_id: parseInt(form.category_id),
     };
     try {
       const res = editProduct
