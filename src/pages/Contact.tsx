@@ -81,6 +81,8 @@ const Contact = () => {
     if (!form.email.trim()) errs.email = "Email is required";
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email))
       errs.email = "Invalid email address";
+    if (form.phone.trim() && !/^[0-9]{10,11}$/.test(form.phone.replace(/\s/g, "")))
+      errs.phone = "Enter a valid Nigerian number";
     if (!form.subject) errs.subject = "Please select a subject";
     if (!form.message.trim()) errs.message = "Message is required";
     else if (form.message.trim().length < 10)

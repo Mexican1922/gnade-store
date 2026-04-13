@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
 import { Slide } from "../../types";
 
 const slides: Slide[] = [
@@ -109,19 +110,10 @@ const themeStyles = {
 
 const HeroSlider = () => {
   const [current, setCurrent] = useState(0);
-  const [animating, setAnimating] = useState(false);
 
-  const goTo = useCallback(
-    (index: number) => {
-      if (animating) return;
-      setAnimating(true);
-      setTimeout(() => {
-        setCurrent((index + slides.length) % slides.length);
-        setAnimating(false);
-      }, 300);
-    },
-    [animating],
-  );
+  const goTo = useCallback((index: number) => {
+    setCurrent((index + slides.length) % slides.length);
+  }, []);
 
   const next = useCallback(() => goTo(current + 1), [current, goTo]);
   const prev = useCallback(() => goTo(current - 1), [current, goTo]);
@@ -138,12 +130,16 @@ const HeroSlider = () => {
     <section
       className={`${t.wrapper} transition-colors duration-700 relative overflow-hidden`}
     >
-      <div
-        className={`max-w-7xl mx-auto px-6 py-16 md:py-24 flex flex-col md:flex-row items-center gap-12 transition-all duration-300 ${
-          animating ? "opacity-0 translate-y-2" : "opacity-100 translate-y-0"
-        }`}
-      >
-        {/* Content */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={current}
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -15 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          className="max-w-7xl mx-auto px-6 py-16 md:py-24 flex flex-col md:flex-row items-center gap-12"
+        >
+          {/* Content */}
         <div className="flex-1 max-w-xl">
           {/* Badge */}
           <span
@@ -225,7 +221,8 @@ const HeroSlider = () => {
             />
           </div>
         </div>
-      </div>
+        </motion.div>
+      </AnimatePresence>
 
       {/* Controls — now theme-aware */}
       <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-4">

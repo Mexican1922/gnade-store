@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ChevronRight, Lock } from "lucide-react";
 import { useCart } from "../context/CartContext";
+import { useToast } from "../context/ToastContext";
 import { ordersAPI } from "../services/api";
 
 // --- Types ---
@@ -107,6 +108,7 @@ const nigerianStates = [
 export default function Checkout() {
   const { items, totalPrice, totalItems, clearCart } = useCart();
   const navigate = useNavigate();
+  const { showToast } = useToast();
 
   const [form, setForm] = useState<FormData>({
     firstName: "",
@@ -161,8 +163,15 @@ export default function Checkout() {
     const validationErrors = validate(form);
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
-      // Scroll to first error
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      // Determine first error and focus it
+      const firstError = Object.keys(validationErrors)[0];
+      const el = document.querySelector(`[name="${firstError}"]`) as HTMLElement;
+      if (el) {
+        el.focus();
+        el.scrollIntoView({ behavior: "smooth", block: "center" });
+      } else {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
       return;
     }
 
@@ -198,31 +207,33 @@ export default function Checkout() {
         ],
       },
       callback: (response) => {
-        // Don't make this async — Paystack doesn't support it
-        // Fire and forget the order save, then navigate
-        setLoading(false);
-        clearCart();
-        navigate(`/order-success?ref=${response.reference}`);
-
-        // Save order in background
-        ordersAPI
-          .create({
-            reference: response.reference,
-            email: form.email,
-            total_amount: grandTotal,
-            shipping_name: `${form.firstName} ${form.lastName}`,
-            shipping_address: `${form.address}, ${form.city}, ${form.state}`,
-            shipping_phone: form.phone,
-            items: items.map((item) => ({
-              product_id: item.id,
-              product_name: item.name,
-              product_price: item.price,
-              quantity: item.quantity,
-            })),
-          })
-          .catch((err) => {
+        (async () => {
+          try {
+            // Await to ensure backend order creation succeeds before clearing cart
+            await ordersAPI.create({
+              reference: response.reference,
+              email: form.email,
+              total_amount: grandTotal,
+              shipping_name: `${form.firstName} ${form.lastName}`,
+              shipping_address: `${form.address}, ${form.city}, ${form.state}`,
+              shipping_phone: form.phone,
+              items: items.map((item) => ({
+                product_id: item.id,
+                product_name: item.name,
+                product_price: Number(item.price), // ensure numeric
+                quantity: item.quantity,
+              })),
+            });
+            
+            setLoading(false);
+            clearCart();
+            navigate(`/order-success?ref=${response.reference}`);
+          } catch (err) {
             console.error("Order save failed:", err);
-          });
+            setLoading(false);
+            showToast("Payment succeeded, but we couldn't record the order. Please contact support immediately.", "error");
+          }
+        })();
       },
       onClose: () => {
         setLoading(false);

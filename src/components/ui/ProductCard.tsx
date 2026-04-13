@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { ShoppingBag, Heart } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Product } from "../../types";
@@ -17,6 +18,7 @@ const badgeStyles = {
 const ProductCard = ({ product }: ProductCardProps) => {
   const { addItem } = useCart();
   const { showToast } = useToast();
+  const [imgLoaded, setImgLoaded] = useState(false);
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -35,14 +37,18 @@ const ProductCard = ({ product }: ProductCardProps) => {
       {/* Image */}
       <Link to={`/product/${product.slug}`}>
         <div className="relative h-48 sm:h-56 md:h-64 bg-gnade-pale overflow-hidden">
-          {/* Primary Image */}
           <img
             src={product.image}
             alt={product.name}
-            className={`absolute inset-0 w-full h-full object-cover transition-all duration-500 ${
+            loading="lazy"
+            decoding="async"
+            onLoad={() => setImgLoaded(true)}
+            className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-out ${
+              imgLoaded ? "opacity-100 scale-100" : "opacity-0 scale-110"
+            } ${
               product.hoverImage
                 ? "group-hover:opacity-0"
-                : "group-hover:scale-105"
+                : imgLoaded ? "group-hover:scale-105" : ""
             }`}
           />
 
@@ -51,7 +57,9 @@ const ProductCard = ({ product }: ProductCardProps) => {
             <img
               src={product.hoverImage}
               alt={`${product.name} — alternate view`}
-              className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500 scale-105"
+              loading="lazy"
+              decoding="async"
+              className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-all duration-500 scale-105 ease-out"
             />
           )}
 

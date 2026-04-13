@@ -58,14 +58,26 @@ export const authAPI = {
 
 // --- Products ---
 export const productsAPI = {
-  getAll: (params?: { category?: string; tag?: string }) => {
+  getAll: async (params?: { category?: string; tag?: string }) => {
     const query = new URLSearchParams(
       params as Record<string, string>,
     ).toString();
-    return request<Product[]>(`/products/${query ? `?${query}` : ""}`);
+    const data = await request<any[]>(`/products/${query ? `?${query}` : ""}`);
+    return data.map((p) => ({
+      ...p,
+      price: Number(p.price),
+      original_price: p.original_price ? Number(p.original_price) : null,
+    })) as Product[];
   },
 
-  getBySlug: (slug: string) => request<Product>(`/products/${slug}/`),
+  getBySlug: async (slug: string) => {
+    const data = await request<any>(`/products/${slug}/`);
+    return {
+      ...data,
+      price: Number(data.price),
+      original_price: data.original_price ? Number(data.original_price) : null,
+    } as Product;
+  },
 };
 
 // --- Orders ---
@@ -124,8 +136,8 @@ export interface Product {
   id: number;
   name: string;
   slug: string;
-  price: string;
-  original_price: string | null;
+  price: number;
+  original_price: number | null;
   stock_count: number | null;
   description: string;
   usage: string;

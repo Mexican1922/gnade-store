@@ -6,12 +6,21 @@ import { useToast } from "../../context/ToastContext";
 const NewsletterSection = () => {
   const { showToast } = useToast();
   const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email) return;
+    if (!email.trim()) {
+      setError("Email address is required");
+      return;
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setError("Please enter a valid email address");
+      return;
+    }
+    
+    setError("");
 
     setLoading(true);
     try {
@@ -51,28 +60,33 @@ const NewsletterSection = () => {
             </p>
           </div>
         ) : (
-          <form
-            onSubmit={handleSubmit}
-            className="flex flex-col sm:flex-row gap-0 max-w-md mx-auto border border-gnade-dark rounded-sm overflow-hidden"
-          >
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email address"
-              required
-              disabled={loading}
-              className="flex-1 px-5 py-3.5 text-[13px] font-light text-gnade-black placeholder:text-gnade-black/30 bg-white outline-none disabled:opacity-60"
-            />
-            <button
-              type="submit"
-              disabled={loading}
-              className="bg-gnade-dark text-white px-6 py-3.5 text-[11px] tracking-[1.5px] uppercase font-medium flex items-center justify-center gap-2 hover:bg-gnade-mid transition-colors duration-200 whitespace-nowrap disabled:opacity-60 disabled:cursor-not-allowed"
+          <div className="flex flex-col max-w-md mx-auto items-start">
+            <form
+              onSubmit={handleSubmit}
+              className={`flex flex-col sm:flex-row gap-0 w-full border rounded-sm overflow-hidden ${error ? "border-red-400" : "border-gnade-dark"}`}
             >
-              {loading ? "Subscribing..." : "Subscribe"}
-              {!loading && <ArrowRight size={12} strokeWidth={1.5} />}
-            </button>
-          </form>
+              <input
+                type="text"
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  if (error) setError("");
+                }}
+                placeholder="Enter your email address"
+                disabled={loading}
+                className="flex-1 px-5 py-3.5 text-[13px] font-light text-gnade-black placeholder:text-gnade-black/30 bg-white outline-none disabled:opacity-60"
+              />
+              <button
+                type="submit"
+                disabled={loading}
+                className="bg-gnade-dark text-white px-6 py-3.5 text-[11px] tracking-[1.5px] uppercase font-medium flex items-center justify-center gap-2 hover:bg-gnade-mid transition-colors duration-200 whitespace-nowrap disabled:opacity-60 disabled:cursor-not-allowed"
+              >
+                {loading ? "Subscribing..." : "Subscribe"}
+                {!loading && <ArrowRight size={12} strokeWidth={1.5} />}
+              </button>
+            </form>
+            {error && <p className="text-[10px] text-red-400 mt-2 ml-1 tracking-[0.5px]">{error}</p>}
+          </div>
         )}
 
         <p className="text-[10px] text-gnade-black/30 tracking-[0.5px] mt-5">

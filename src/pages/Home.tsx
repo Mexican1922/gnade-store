@@ -9,6 +9,7 @@ import EmpathySection from "../components/sections/EmpathySection";
 import HowItWorksSection from "../components/sections/HowItWorksSection";
 import TestimonialsSection from "../components/sections/TestimonialsSection";
 import NewsletterSection from "../components/sections/NewsletterSection";
+import ScrollReveal from "../components/ui/ScrollReveal";
 import { productsAPI } from "../services/api";
 import { Product } from "../types";
 import { toProduct } from "../utils/adapters";
@@ -41,8 +42,14 @@ const Home = () => {
   return (
     <>
       <HeroSlider />
-      <MarqueeStrip />
-      <CategoriesSection />
+      <ScrollReveal yOffset={20}>
+        <MarqueeStrip />
+      </ScrollReveal>
+      
+      <ScrollReveal delay={0.1}>
+        <CategoriesSection />
+      </ScrollReveal>
+
       {loading ? (
         <section className="bg-white py-16 px-6">
           <div className="max-w-7xl mx-auto flex items-center justify-center min-h-[300px]">
@@ -53,17 +60,26 @@ const Home = () => {
           </div>
         </section>
       ) : (
-        <ProductsSection
-          title="New"
-          titleItalic="in Stock"
-          products={newProductsItems}
-          viewAllPath="/shop?tag=new"
-          viewAllLabel="Shop Latest"
-          bg="bg-white"
-        />
+        <ScrollReveal>
+          <ProductsSection
+            title="New"
+            titleItalic="in Stock"
+            products={newProductsItems}
+            viewAllPath="/shop?tag=new"
+            viewAllLabel="Shop Latest"
+            bg="bg-white"
+          />
+        </ScrollReveal>
       )}
-      <EditorialBanner />
-      <SkinConcernSection />
+
+      <ScrollReveal>
+        <EditorialBanner />
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <SkinConcernSection />
+      </ScrollReveal>
+
       {loading ? (
         <section className="bg-gnade-cream py-16 px-6">
           <div className="max-w-7xl mx-auto flex items-center justify-center min-h-[300px]">
@@ -74,19 +90,33 @@ const Home = () => {
           </div>
         </section>
       ) : (
-        <ProductsSection
-          title="Best"
-          titleItalic="Sellers"
-          products={bestSellersItems}
-          viewAllPath="/shop?tag=bestseller"
-          viewAllLabel="More Products"
-          bg="bg-gnade-cream"
-        />
+        <ScrollReveal>
+          <ProductsSection
+            title="Best"
+            titleItalic="Sellers"
+            products={bestSellersItems}
+            viewAllPath="/shop?tag=bestseller"
+            viewAllLabel="More Products"
+            bg="bg-gnade-cream"
+          />
+        </ScrollReveal>
       )}
-      <EmpathySection />
-      <HowItWorksSection />
-      <TestimonialsSection />
-      <NewsletterSection />
+
+      <ScrollReveal>
+        <EmpathySection />
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <HowItWorksSection />
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <TestimonialsSection />
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <NewsletterSection />
+      </ScrollReveal>
     </>
   );
 };
