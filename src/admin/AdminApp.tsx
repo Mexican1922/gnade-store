@@ -3,32 +3,10 @@ import { useAuth, ClerkProvider } from "@clerk/clerk-react";
 import { AdminSignIn } from "./AdminSignIn";
 import AdminDashboard from "./AdminDashboard";
 import AdminProducts from "./AdminProducts";
+import AdminOrdersPage from "./AdminOrders";
 import AdminLayout from "./AdminLayout";
 
 const CLERK_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY as string;
-
-function AdminOrders() {
-  return (
-    <AdminLayout>
-      <div className="max-w-5xl mx-auto">
-        <h1
-          style={{
-            fontSize: 22,
-            fontWeight: 600,
-            color: "#0F1A10",
-            fontFamily: "Cormorant Garamond, serif",
-            marginBottom: 8,
-          }}
-        >
-          Orders
-        </h1>
-        <p style={{ fontSize: 13, color: "#888" }}>
-          Orders management coming soon.
-        </p>
-      </div>
-    </AdminLayout>
-  );
-}
 
 function AdminCategories() {
   return (
@@ -92,7 +70,7 @@ function AdminRoutes() {
         path="orders"
         element={
           <ProtectedRoute>
-            <AdminOrders />
+            <AdminOrdersPage />
           </ProtectedRoute>
         }
       />
