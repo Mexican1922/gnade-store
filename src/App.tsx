@@ -18,6 +18,7 @@ const Privacy = lazy(() => import("./pages/Privacy"));
 const FAQ = lazy(() => import("./pages/FAQ"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const AdminApp = lazy(() => import("./admin/AdminApp"));
+const WishlistPage = lazy(() => import("./pages/WishlistPage"));
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
           <Route path="/returns" element={<Returns />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/faq" element={<FAQ />} />
+          <Route path="/wishlist" element={<WishlistPage />} />
         </Route>
         <Route path="/admin/*" element={<AdminApp />} />
         <Route path="*" element={<NotFound />} />

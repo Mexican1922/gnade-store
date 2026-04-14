@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Product } from "../../types";
 import { useCart } from "../../context/CartContext";
 import { useToast } from "../../context/ToastContext";
+import { useWishlist } from "../../context/WishlistContext";
 
 interface ProductCardProps {
   product: Product;
@@ -17,6 +18,8 @@ const badgeStyles = {
 };
 const ProductCard = ({ product }: ProductCardProps) => {
   const { addItem } = useCart();
+  const { toggleItem, isWishlisted } = useWishlist();
+  const wishlisted = isWishlisted(product.id);
   const { showToast } = useToast();
   const [imgLoaded, setImgLoaded] = useState(false);
 
@@ -25,6 +28,12 @@ const ProductCard = ({ product }: ProductCardProps) => {
     e.stopPropagation();
     addItem(product);
     showToast(`${product.name} added to cart`);
+  };
+
+  const handleToggleWishlist = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleItem(product);
   };
 
   const preventNavigation = (e: React.MouseEvent) => {
@@ -48,7 +57,9 @@ const ProductCard = ({ product }: ProductCardProps) => {
             } ${
               product.hoverImage
                 ? "group-hover:opacity-0"
-                : imgLoaded ? "group-hover:scale-105" : ""
+                : imgLoaded
+                  ? "group-hover:scale-105"
+                  : ""
             }`}
           />
 
@@ -83,11 +94,18 @@ const ProductCard = ({ product }: ProductCardProps) => {
                 Add to Cart
               </button>
               <button
-                onClick={preventNavigation}
+                onClick={handleToggleWishlist}
                 aria-label="Add to wishlist"
                 className="w-10 bg-white text-gnade-dark rounded-sm flex items-center justify-center hover:bg-gnade-pale transition-colors duration-200"
               >
-                <Heart size={13} strokeWidth={1.5} />
+                <Heart
+                  size={13}
+                  strokeWidth={1.5}
+                  fill={wishlisted ? "currentColor" : "none"}
+                  className={
+                    wishlisted ? "text-gnade-pink-mid" : "text-gnade-dark"
+                  }
+                />
               </button>
             </div>
           )}
@@ -95,11 +113,18 @@ const ProductCard = ({ product }: ProductCardProps) => {
           {/* Mobile + Tablet: wishlist button in top-right corner */}
           {product.inStock && (
             <button
-              onClick={preventNavigation}
+              onClick={handleToggleWishlist}
               aria-label="Add to wishlist"
-              className="lg:hidden absolute top-2.5 right-2.5 w-8 h-8 bg-white/90 backdrop-blur-sm text-gnade-dark rounded-full flex items-center justify-center z-10 active:scale-95 transition-transform duration-150"
+              className="lg:hidden absolute top-2.5 right-2.5 w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center z-10 active:scale-95 transition-transform duration-150"
             >
-              <Heart size={13} strokeWidth={1.5} />
+              <Heart
+                size={13}
+                strokeWidth={1.5}
+                fill={wishlisted ? "currentColor" : "none"}
+                className={
+                  wishlisted ? "text-gnade-pink-mid" : "text-gnade-dark"
+                }
+              />
             </button>
           )}
         </div>

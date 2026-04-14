@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Search, Heart, ShoppingBag, Menu, X } from "lucide-react";
 import { useCart } from "../../context/CartContext";
+import { useWishlist } from "../../context/WishlistContext";
 
 const navLinks = [
   { label: "Home", path: "/" },
@@ -15,6 +16,7 @@ const navLinks = [
 
 const Navbar = () => {
   const { totalItems } = useCart();
+  const { totalItems: wishlistCount } = useWishlist();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -64,12 +66,18 @@ const Navbar = () => {
             >
               <Search size={14} strokeWidth={1.5} />
             </button>
-            <button
+            <Link
+              to="/wishlist"
               aria-label="Wishlist"
-              className="w-8 h-8 flex items-center justify-center rounded-full border border-black/10 hover:bg-gnade-pale hover:border-gnade-dark/20 transition-all duration-200"
+              className="relative w-8 h-8 flex items-center justify-center rounded-full border border-black/10 hover:bg-gnade-pale hover:border-gnade-dark/20 transition-all duration-200"
             >
               <Heart size={14} strokeWidth={1.5} />
-            </button>
+              {wishlistCount > 0 && (
+                <span className="absolute -top-1 -right-1 w-4 h-4 bg-gnade-pink-mid text-white text-[8px] font-semibold rounded-full flex items-center justify-center leading-none">
+                  {wishlistCount > 9 ? "9+" : wishlistCount}
+                </span>
+              )}
+            </Link>
             <Link
               to="/cart"
               aria-label="Cart"

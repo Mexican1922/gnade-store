@@ -1,4 +1,10 @@
-import { createContext, useContext, useReducer, useEffect, ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useReducer,
+  useEffect,
+  ReactNode,
+} from "react";
 import { CartItem, Product } from "../types";
 
 type CartState = { items: CartItem[] };
@@ -69,22 +75,29 @@ type CartContextType = {
 const CartContext = createContext<CartContextType | null>(null);
 
 export function CartProvider({ children }: { children: ReactNode }) {
-  const [state, dispatch] = useReducer(cartReducer, { items: [] }, (initial) => {
-    try {
-      const localData = localStorage.getItem("gnade_cart");
-      return localData ? { items: JSON.parse(localData) } : initial;
-    } catch {
-      return initial;
-    }
-  });
+  const [state, dispatch] = useReducer(
+    cartReducer,
+    { items: [] },
+    (initial) => {
+      try {
+        const localData = localStorage.getItem("gnade_cart");
+        return localData ? { items: JSON.parse(localData) } : initial;
+      } catch {
+        return initial;
+      }
+    },
+  );
 
   useEffect(() => {
     localStorage.setItem("gnade_cart", JSON.stringify(state.items));
   }, [state.items]);
 
-  const totalItems = state.items.reduce((sum, i) => sum + i.quantity, 0);
+  const totalItems = state.items.reduce(
+    (sum: number, i: CartItem) => sum + i.quantity,
+    0,
+  );
   const totalPrice = state.items.reduce(
-    (sum, i) => sum + i.price * i.quantity,
+    (sum: number, i: CartItem) => sum + i.price * i.quantity,
     0,
   );
 
