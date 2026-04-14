@@ -17,8 +17,8 @@ const navLinks = [
 
 const Navbar = () => {
   const { totalItems } = useCart();
-  const [searchOpen, setSearchOpen] = useState(false);
   const { totalItems: wishlistCount } = useWishlist();
+  const [searchOpen, setSearchOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -62,10 +62,16 @@ const Navbar = () => {
 
           {/* Actions */}
           <div className="flex items-center gap-3">
-            <SearchModal
-              open={searchOpen}
-              onClose={() => setSearchOpen(false)}
-            />
+            {/* Search */}
+            <button
+              onClick={() => setSearchOpen(true)}
+              aria-label="Search"
+              className="w-8 h-8 flex items-center justify-center rounded-full border border-black/10 hover:bg-gnade-pale hover:border-gnade-dark/20 transition-all duration-200"
+            >
+              <Search size={14} strokeWidth={1.5} />
+            </button>
+
+            {/* Wishlist */}
             <Link
               to="/wishlist"
               aria-label="Wishlist"
@@ -78,6 +84,8 @@ const Navbar = () => {
                 </span>
               )}
             </Link>
+
+            {/* Cart */}
             <Link
               to="/cart"
               aria-label="Cart"
@@ -122,6 +130,9 @@ const Navbar = () => {
           ))}
         </div>
       )}
+
+      {/* Search Modal */}
+      <SearchModal open={searchOpen} onClose={() => setSearchOpen(false)} />
     </>
   );
 };
