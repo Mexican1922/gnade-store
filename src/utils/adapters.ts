@@ -2,18 +2,29 @@ import type { Product as APIProduct } from "../services/api";
 import { Product } from "../types";
 
 export const FALLBACK_CATEGORIES = [
-  "All", "Lipcare", "Face Care", "Body Care", "Natural Oils", "Soaps", "Spa",
+  "All",
+  "Lipcare",
+  "Face Care",
+  "Body Care",
+  "Natural Oils",
+  "Soaps",
+  "Spa",
 ];
 
 export function toProduct(p: APIProduct): Product {
-  const origPrice = p.original_price ? parseFloat(p.original_price) : undefined;
-  const isSale = !!origPrice && origPrice > parseFloat(p.price);
+  const price = typeof p.price === "string" ? parseFloat(p.price) : p.price;
+  const origPrice = p.original_price
+    ? typeof p.original_price === "string"
+      ? parseFloat(p.original_price)
+      : p.original_price
+    : undefined;
+  const isSale = !!origPrice && origPrice > price;
 
   return {
     id: p.id,
     name: p.name,
     slug: p.slug,
-    price: parseFloat(p.price),
+    price,
     originalPrice: origPrice,
     image: p.image || "/placeholder.jpg",
     hoverImage: p.hover_image || undefined,
