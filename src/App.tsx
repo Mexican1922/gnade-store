@@ -19,6 +19,7 @@ const FAQ = lazy(() => import("./pages/FAQ"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const AdminApp = lazy(() => import("./admin/AdminApp"));
 const WishlistPage = lazy(() => import("./pages/WishlistPage"));
+const TrackOrder = lazy(() => import("./pages/TrackOrder"));
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/wishlist" element={<WishlistPage />} />
+          <Route path="/track-order" element={<TrackOrder />} />
         </Route>
         <Route path="/admin/*" element={<AdminApp />} />
         <Route path="*" element={<NotFound />} />

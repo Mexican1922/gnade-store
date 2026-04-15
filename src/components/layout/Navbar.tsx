@@ -79,7 +79,7 @@ const Navbar = () => {
             >
               <Heart size={14} strokeWidth={1.5} />
               {wishlistCount > 0 && (
-                <span className="absolute -top-1 -right-1 w-4 h-4 bg-gnade-pink-mid text-white text-[8px] font-semibold rounded-full flex items-center justify-center leading-none">
+                <span className="absolute -top-1 -right-1 w-4 h-4 bg-gnade-pink text-gnade-dark text-[8px] font-semibold rounded-full flex items-center justify-center leading-none">
                   {wishlistCount > 9 ? "9+" : wishlistCount}
                 </span>
               )}

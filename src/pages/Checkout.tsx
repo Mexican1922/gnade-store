@@ -165,7 +165,9 @@ export default function Checkout() {
       setErrors(validationErrors);
       // Determine first error and focus it
       const firstError = Object.keys(validationErrors)[0];
-      const el = document.querySelector(`[name="${firstError}"]`) as HTMLElement;
+      const el = document.querySelector(
+        `[name="${firstError}"]`,
+      ) as HTMLElement;
       if (el) {
         el.focus();
         el.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -209,8 +211,7 @@ export default function Checkout() {
       callback: (response) => {
         (async () => {
           try {
-            // Await to ensure backend order creation succeeds before clearing cart
-            await ordersAPI.create({
+            const order = await ordersAPI.create({
               reference: response.reference,
               email: form.email,
               total_amount: grandTotal,
@@ -220,18 +221,23 @@ export default function Checkout() {
               items: items.map((item) => ({
                 product_id: item.id,
                 product_name: item.name,
-                product_price: Number(item.price), // ensure numeric
+                product_price: Number(item.price),
                 quantity: item.quantity,
               })),
             });
-            
+
             setLoading(false);
             clearCart();
-            navigate(`/order-success?ref=${response.reference}`);
+            navigate(
+              `/order-success?ref=${response.reference}&order_id=${order.id}`,
+            );
           } catch (err) {
             console.error("Order save failed:", err);
             setLoading(false);
-            showToast("Payment succeeded, but we couldn't record the order. Please contact support immediately.", "error");
+            showToast(
+              "Payment succeeded, but we couldn't record the order. Please contact support immediately.",
+              "error",
+            );
           }
         })();
       },

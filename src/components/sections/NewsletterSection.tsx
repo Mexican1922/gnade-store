@@ -38,7 +38,7 @@ const NewsletterSection = () => {
   };
 
   return (
-    <section className="bg-gnade-cream py-20 px-6">
+    <section className="bg-gnade-pink py-20 px-6">
       <div className="max-w-2xl mx-auto text-center">
         <span className="inline-block text-[10px] tracking-[2px] uppercase text-gnade-dark/50 mb-5">
           Stay Connected

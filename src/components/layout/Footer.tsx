@@ -10,15 +10,10 @@ const footerLinks = {
     { label: "Soaps & Scrubs", path: "/shop?category=soaps" },
     { label: "Spa Services", path: "/spa" },
   ],
-  Account: [
-    { label: "My Account", path: "/account" },
-    { label: "Track My Order", path: "/account/orders" },
-    { label: "Wishlist", path: "/wishlist" },
-    { label: "Cart", path: "/cart" },
-  ],
   Info: [
     { label: "About Us", path: "/about" },
     { label: "Contact", path: "/contact" },
+    { label: "Track My Order", path: "/track-order" },
     { label: "Delivery Info", path: "/delivery" },
     { label: "Return Policy", path: "/returns" },
     { label: "Privacy Policy", path: "/privacy" },
@@ -40,7 +35,7 @@ const Footer = () => {
     <footer className="bg-gnade-black pt-16 pb-8 px-6">
       <div className="max-w-7xl mx-auto">
         {/* Top Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 pb-12 border-b border-white/8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 pb-12 border-b border-white/8">
           {/* Brand */}
           <div className="lg:col-span-2">
             <Link to="/" className="flex flex-col leading-none mb-5">

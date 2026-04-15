@@ -13,7 +13,7 @@ interface ProductCardProps {
 const badgeStyles = {
   "Best Seller": "bg-gnade-dark text-white",
   New: "bg-gnade-black text-white",
-  Sale: "bg-gnade-pink-mid text-white",
+  Sale: "bg-gnade-pink text-gnade-dark",
   "Out of Stock": "bg-black/10 text-black/50",
 };
 const ProductCard = ({ product }: ProductCardProps) => {
@@ -103,7 +103,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
                   strokeWidth={1.5}
                   fill={wishlisted ? "currentColor" : "none"}
                   className={
-                    wishlisted ? "text-gnade-pink-mid" : "text-gnade-dark"
+                    wishlisted ? "text-gnade-pink" : "text-gnade-dark"
                   }
                 />
               </button>
@@ -122,7 +122,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
                 strokeWidth={1.5}
                 fill={wishlisted ? "currentColor" : "none"}
                 className={
-                  wishlisted ? "text-gnade-pink-mid" : "text-gnade-dark"
+                  wishlisted ? "text-gnade-pink" : "text-gnade-dark"
                 }
               />
             </button>
