@@ -9,8 +9,6 @@ import AdminLayout from "./AdminLayout";
 
 const CLERK_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY as string;
 
-
-
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { isSignedIn, isLoaded } = useAuth();
   if (!isLoaded)

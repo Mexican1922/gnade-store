@@ -5,6 +5,7 @@ import { Product } from "../../types";
 import { useCart } from "../../context/CartContext";
 import { useToast } from "../../context/ToastContext";
 import { useWishlist } from "../../context/WishlistContext";
+import { optimizeImage } from "../../utils/cloudinary";
 
 interface ProductCardProps {
   product: Product;
@@ -47,7 +48,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
       <Link to={`/product/${product.slug}`}>
         <div className="relative h-48 sm:h-56 md:h-64 bg-gnade-pale overflow-hidden">
           <img
-            src={product.image}
+            src={optimizeImage(product.image, 600)}
             alt={product.name}
             loading="lazy"
             decoding="async"
@@ -66,7 +67,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
           {/* Hover Image */}
           {product.hoverImage && (
             <img
-              src={product.hoverImage}
+              src={optimizeImage(product.hoverImage, 600)}
               alt={`${product.name} — alternate view`}
               loading="lazy"
               decoding="async"
@@ -102,9 +103,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
                   size={13}
                   strokeWidth={1.5}
                   fill={wishlisted ? "currentColor" : "none"}
-                  className={
-                    wishlisted ? "text-gnade-pink" : "text-gnade-dark"
-                  }
+                  className={wishlisted ? "text-gnade-pink" : "text-gnade-dark"}
                 />
               </button>
             </div>
@@ -121,9 +120,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
                 size={13}
                 strokeWidth={1.5}
                 fill={wishlisted ? "currentColor" : "none"}
-                className={
-                  wishlisted ? "text-gnade-pink" : "text-gnade-dark"
-                }
+                className={wishlisted ? "text-gnade-pink" : "text-gnade-dark"}
               />
             </button>
           )}

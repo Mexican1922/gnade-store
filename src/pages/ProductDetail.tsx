@@ -6,7 +6,7 @@ import { useToast } from "../context/ToastContext";
 import { productsAPI } from "../services/api";
 import { Product } from "../types";
 import { toProduct } from "../utils/adapters";
-
+import { optimizeImage } from "../utils/cloudinary";
 
 const ProductDetail = () => {
   const { addItem } = useCart();
@@ -134,7 +134,7 @@ const ProductDetail = () => {
           <div className="flex flex-col gap-4">
             <div className="aspect-square bg-gnade-pale rounded-sm overflow-hidden">
               <img
-                src={images[activeImage]}
+                src={optimizeImage(images[activeImage], 900)}
                 alt={product.name}
                 className="w-full h-full object-cover"
               />
@@ -152,7 +152,7 @@ const ProductDetail = () => {
                     }`}
                   >
                     <img
-                      src={img}
+                      src={optimizeImage(img, 200)}
                       alt={`${product.name} ${i + 1}`}
                       className="w-full h-full object-cover"
                     />
@@ -183,16 +183,23 @@ const ProductDetail = () => {
               <span className="text-2xl font-medium text-gnade-dark">
                 ₦{product.price.toLocaleString()}
               </span>
-              {product.originalPrice && product.originalPrice > product.price && (
-                <span className="text-[15px] text-black/30 line-through">
-                  ₦{product.originalPrice.toLocaleString()}
-                </span>
-              )}
-              {product.originalPrice && product.originalPrice > product.price && (
-                <span className="text-[11px] tracking-[0.5px] font-medium text-green-600 bg-green-50 px-2 py-0.5 rounded-sm">
-                  {Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}% OFF
-                </span>
-              )}
+              {product.originalPrice &&
+                product.originalPrice > product.price && (
+                  <span className="text-[15px] text-black/30 line-through">
+                    ₦{product.originalPrice.toLocaleString()}
+                  </span>
+                )}
+              {product.originalPrice &&
+                product.originalPrice > product.price && (
+                  <span className="text-[11px] tracking-[0.5px] font-medium text-green-600 bg-green-50 px-2 py-0.5 rounded-sm">
+                    {Math.round(
+                      ((product.originalPrice - product.price) /
+                        product.originalPrice) *
+                        100,
+                    )}
+                    % OFF
+                  </span>
+                )}
             </div>
 
             {product.inStock ? (
@@ -318,7 +325,7 @@ const ProductDetail = () => {
                   <Link key={p.id} to={`/product/${p.slug}`} className="group">
                     <div className="aspect-square bg-gnade-pale rounded-sm overflow-hidden mb-3">
                       <img
-                        src={p.image}
+                        src={optimizeImage(p.image, 400)}
                         alt={p.name}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />
