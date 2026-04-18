@@ -12,7 +12,8 @@ const EditorialBanner = () => {
             className="group relative overflow-hidden rounded-sm aspect-[4/5] md:aspect-auto"
           >
             <img
-              src="/images/nora-topicals.jpg"
+              src="/images/nora-topicals.webp"
+              loading="lazy"
               alt="Skincare collection"
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
             />
@@ -38,7 +39,8 @@ const EditorialBanner = () => {
               className="group relative overflow-hidden rounded-sm flex-1 min-h-[220px]"
             >
               <img
-                src="/images/model-lip.jpg"
+                src="/images/model-lip.webp"
+                loading="lazy"
                 alt="Lipcare collection"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
@@ -62,6 +64,7 @@ const EditorialBanner = () => {
             >
               <img
                 src="/images/content-pixie.jpg"
+                loading="lazy"
                 alt="Spa experience"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               />

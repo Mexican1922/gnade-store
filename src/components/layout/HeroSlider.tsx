@@ -20,7 +20,7 @@ const slides: Slide[] = [
       { value: "100%", label: "Natural" },
     ],
     theme: "light",
-    image: "/images/serum-bottle.png",
+    image: "/images/serum-bottle.webp",
   },
   {
     id: 2,
@@ -36,7 +36,7 @@ const slides: Slide[] = [
       { value: "0%", label: "Harmful Chemicals" },
     ],
     theme: "dark",
-    image: "/images/lipstick.png",
+    image: "/images/lipstick.webp",
   },
   {
     id: 3,
@@ -140,87 +140,89 @@ const HeroSlider = () => {
           className="max-w-7xl mx-auto px-6 py-16 md:py-24 flex flex-col md:flex-row items-center gap-12"
         >
           {/* Content */}
-        <div className="flex-1 max-w-xl">
-          {/* Badge */}
-          <span
-            className={`${t.badge} inline-block text-[10px] tracking-[2px] uppercase px-3 py-1.5 rounded-full mb-6`}
-          >
-            {slide.badge}
-          </span>
-
-          {/* Heading */}
-          <h1
-            className={`${t.heading} font-serif text-5xl md:text-6xl font-semibold leading-[1.1] mb-4`}
-          >
-            {slide.heading}{" "}
-            <em className={`${t.italic} italic`}>{slide.headingItalic}</em>
-          </h1>
-
-          {/* Body */}
-          <p
-            className={`${t.body} text-[14px] leading-relaxed mb-8 max-w-md font-light`}
-          >
-            {slide.subheading}
-          </p>
-
-          {/* Buttons */}
-          <div className="flex gap-3 flex-wrap">
-            <Link
-              to={slide.primaryBtn.path}
-              className={`${t.primaryBtn} px-7 py-3 text-[11px] tracking-[1.5px] uppercase font-medium rounded-sm transition-all duration-200 hover:shadow-md`}
+          <div className="flex-1 max-w-xl">
+            {/* Badge */}
+            <span
+              className={`${t.badge} inline-block text-[10px] tracking-[2px] uppercase px-3 py-1.5 rounded-full mb-6`}
             >
-              {slide.primaryBtn.label}
-            </Link>
-            <Link
-              to={slide.secondaryBtn.path}
-              className={`${t.secondaryBtn} px-7 py-3 text-[11px] tracking-[1.5px] uppercase font-medium rounded-sm transition-all duration-200`}
+              {slide.badge}
+            </span>
+
+            {/* Heading */}
+            <h1
+              className={`${t.heading} font-serif text-5xl md:text-6xl font-semibold leading-[1.1] mb-4`}
             >
-              {slide.secondaryBtn.label}
-            </Link>
+              {slide.heading}{" "}
+              <em className={`${t.italic} italic`}>{slide.headingItalic}</em>
+            </h1>
+
+            {/* Body */}
+            <p
+              className={`${t.body} text-[14px] leading-relaxed mb-8 max-w-md font-light`}
+            >
+              {slide.subheading}
+            </p>
+
+            {/* Buttons */}
+            <div className="flex gap-3 flex-wrap">
+              <Link
+                to={slide.primaryBtn.path}
+                className={`${t.primaryBtn} px-7 py-3 text-[11px] tracking-[1.5px] uppercase font-medium rounded-sm transition-all duration-200 hover:shadow-md`}
+              >
+                {slide.primaryBtn.label}
+              </Link>
+              <Link
+                to={slide.secondaryBtn.path}
+                className={`${t.secondaryBtn} px-7 py-3 text-[11px] tracking-[1.5px] uppercase font-medium rounded-sm transition-all duration-200`}
+              >
+                {slide.secondaryBtn.label}
+              </Link>
+            </div>
+
+            {/* Stats */}
+            <div className={`flex gap-8 mt-10 pt-8 border-t ${t.divider}`}>
+              {slide.stats.map((stat) => (
+                <div key={stat.label}>
+                  <div
+                    className={`${t.stat} font-serif text-3xl font-semibold`}
+                  >
+                    {stat.value}
+                  </div>
+                  <div
+                    className={`${t.statLabel} text-[10px] tracking-[1.5px] uppercase mt-0.5`}
+                  >
+                    {stat.label}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
 
-          {/* Stats */}
-          <div className={`flex gap-8 mt-10 pt-8 border-t ${t.divider}`}>
-            {slide.stats.map((stat) => (
-              <div key={stat.label}>
-                <div className={`${t.stat} font-serif text-3xl font-semibold`}>
-                  {stat.value}
-                </div>
-                <div
-                  className={`${t.statLabel} text-[10px] tracking-[1.5px] uppercase mt-0.5`}
-                >
-                  {stat.label}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Image */}
-        <div className="flex-1 flex justify-center md:justify-end items-center">
-          <div className="relative w-64 md:w-80 h-80 md:h-96 flex items-center justify-center">
-            <img
-              src={slide.image}
-              alt={slide.headingItalic}
-              className={`w-full h-full object-contain transition-opacity duration-300 ${
-                slide.theme === "light" ? "mix-blend-multiply" : ""
-              }`}
-              style={
-                slide.theme === "darker"
-                  ? {
-                      filter:
-                        "drop-shadow(0 0 1px #0F1A10) drop-shadow(0 0 2px #0F1A10) drop-shadow(0 0 3px #0F1A10)",
-                    }
-                  : slide.theme === "dark"
+          {/* Image */}
+          <div className="flex-1 flex justify-center md:justify-end items-center">
+            <div className="relative w-64 md:w-80 h-80 md:h-96 flex items-center justify-center">
+              <img
+                src={slide.image}
+                alt={slide.headingItalic}
+                className={`w-full h-full object-contain transition-opacity duration-300 ${
+                  slide.theme === "light" ? "mix-blend-multiply" : ""
+                }`}
+                style={
+                  slide.theme === "darker"
                     ? {
                         filter:
-                          "drop-shadow(0 0 1px #1B5E20) drop-shadow(0 0 2px #1B5E20)",
+                          "drop-shadow(0 0 1px #0F1A10) drop-shadow(0 0 2px #0F1A10) drop-shadow(0 0 3px #0F1A10)",
                       }
-                    : undefined
-              }
-            />
+                    : slide.theme === "dark"
+                      ? {
+                          filter:
+                            "drop-shadow(0 0 1px #1B5E20) drop-shadow(0 0 2px #1B5E20)",
+                        }
+                      : undefined
+                }
+              />
+            </div>
           </div>
-        </div>
         </motion.div>
       </AnimatePresence>
 

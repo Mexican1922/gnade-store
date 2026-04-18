@@ -27,7 +27,7 @@ const services = [
       "An advanced treatment targeting dark spots, hyperpigmentation and uneven skin tone using Vitamin C and natural brightening agents.",
     duration: "75 min",
     price: "₦20,000",
-    image: "/images/concern-glow.jpg",
+    image: "/images/concern-glow.webp",
     popular: false,
   },
   {
@@ -45,7 +45,7 @@ const services = [
       "A targeted treatment for acne-prone skin. Deep cleans, calms inflammation and controls sebum using tea tree, salicylic acid and clay.",
     duration: "60 min",
     price: "₦17,000",
-    image: "/images/concern-acne.jpg",
+    image: "/images/concern-acne.webp",
     popular: false,
   },
   {
@@ -54,7 +54,7 @@ const services = [
       "A one-on-one session with our aesthetician to analyse your skin, identify concerns and recommend a personalised skincare routine.",
     duration: "30 min",
     price: "₦5,000",
-    image: "/images/pexels-gustavo-fring-7446658.jpg",
+    image: "/images/pexels-gustavo-fring-7446658.webp",
     popular: true,
   },
   {
@@ -63,7 +63,7 @@ const services = [
       "A premium multi-step treatment designed for brides-to-be. Includes deep cleanse, exfoliation, mask, massage and glow-boosting finish.",
     duration: "120 min",
     price: "₦35,000",
-    image: "/images/rosa-rafael.jpg",
+    image: "/images/rosa-rafael.webp",
     popular: false,
   },
 ];
@@ -102,7 +102,8 @@ const Spa = () => {
       {/* ═══════ Hero ═══════ */}
       <section className="relative h-[55vh] md:h-[65vh] overflow-hidden">
         <img
-          src="/images/pexels-ron-lach-9253766.jpg"
+          src="/images/pexels-ron-lach-9253766.webp"
+          loading="lazy"
           alt="GNADE Spa experience"
           className="w-full h-full object-cover"
         />
@@ -189,6 +190,7 @@ const Spa = () => {
                   <img
                     src={s.image}
                     alt={s.title}
+                    loading="lazy"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   {s.popular && (
@@ -297,11 +299,11 @@ const Spa = () => {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
             {[
-              { src: "/images/spa.jpg", span: "col-span-2 row-span-2" },
+              { src: "/images/spa.webp", span: "col-span-2 row-span-2" },
               { src: "/images/content-pixie.jpg", span: "" },
-              { src: "/images/pexels-shotpot-6338383.jpg", span: "" },
-              { src: "/images/pexels-shotpot-6338374.jpg", span: "" },
-              { src: "/images/ekaterina-bolovtsova.jpg", span: "" },
+              { src: "/images/pexels-shotpot-6338383.webp", span: "" },
+              { src: "/images/pexels-shotpot-6338374.webp", span: "" },
+              { src: "/images/ekaterina-bolovtsova.webp", span: "" },
             ].map((img, i) => (
               <div
                 key={i}
@@ -310,6 +312,7 @@ const Spa = () => {
                 <img
                   src={img.src}
                   alt="GNADE spa environment"
+                  loading="lazy"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 min-h-[160px]"
                 />
               </div>

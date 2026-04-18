@@ -7,19 +7,19 @@ const concerns = [
     label: "Acne & Breakouts",
     description: "Targeted formulas that clear and prevent breakouts",
     path: "/shop?concern=acne",
-    image: "/images/concern-acne.jpg",
+    image: "/images/concern-acne.webp",
   },
   {
     label: "Dark Spots",
     description: "Brighten and fade hyperpigmentation effectively",
     path: "/shop?concern=dark-spots",
-    image: "/images/concern-darkspots.jpg",
+    image: "/images/concern-darkspots.webp",
   },
   {
     label: "Dull Skin & Glow",
     description: "Restore radiance and natural luminosity",
     path: "/shop?concern=glow",
-    image: "/images/concern-glow.jpg",
+    image: "/images/concern-glow.webp ",
   },
   {
     label: "Dry & Dehydrated",
@@ -31,13 +31,13 @@ const concerns = [
     label: "Oily Skin",
     description: "Balance and control excess sebum production",
     path: "/shop?concern=oily",
-    image: "/images/concern-oily.jpg",
+    image: "/images/concern-oily.webp",
   },
   {
     label: "Uneven Skin Tone",
     description: "Even out your complexion for a smooth finish",
     path: "/shop?concern=uneven",
-    image: "/images/concern-uneven.jpg",
+    image: "/images/concern-uneven.webp",
   },
 ];
 
@@ -63,6 +63,7 @@ const SkinConcernSection = () => {
                 <img
                   src={concern.image}
                   alt={concern.label}
+                  loading="lazy"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />

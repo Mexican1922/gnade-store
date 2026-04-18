@@ -82,7 +82,8 @@ const About = () => {
       {/* ═══════ Hero Banner ═══════ */}
       <section className="relative h-[50vh] md:h-[60vh] overflow-hidden">
         <img
-          src="/images/neauthy-skincare (2).jpg"
+          src="/images/neauthy-skincare (2).webp"
+          loading="lazy"
           alt="GNADE skincare products"
           className="w-full h-full object-cover"
         />
@@ -108,7 +109,8 @@ const About = () => {
           <div className="relative">
             <div className="aspect-[4/5] rounded-sm overflow-hidden">
               <img
-                src="/images/pexels-gustavo-fring-7446658.jpg"
+                src="/images/pexels-gustavo-fring-7446658.webp"
+                loading="lazy"
                 alt="GNADE founder"
                 className="w-full h-full object-cover"
               />
